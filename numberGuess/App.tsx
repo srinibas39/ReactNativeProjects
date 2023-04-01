@@ -1,36 +1,39 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
 
-import React from 'react';
-import type {PropsWithChildren} from 'react';
+import React, { useState } from 'react';
+import LinearGradient from 'react-native-linear-gradient';
+
 import {
+  ImageBackground,
   SafeAreaView,
-  ScrollView,
-  StatusBar,
   StyleSheet,
-  Text,
   useColorScheme,
   View,
 } from 'react-native';
 
 import {
   Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
-
-
-
+import { GameStart } from './screens/GameStart';
+import { Game } from './screens/Game';
+import { GameEnd } from './screens/GameEnd';
 
 
 function App(): JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
+
+  const [renderItem, setRenderItem] = useState<string>("GameStart")
+  const [no, setNo] = useState(0)
+  const [rounds, setRounds] = useState(0);
+
+  const changeScreen = (no: number) => {
+    if (no) {
+      setNo(no)
+      setRenderItem("Game")
+    }
+    else {
+      setRenderItem("GameStart")
+    }
+  }
 
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
@@ -38,29 +41,49 @@ function App(): JSX.Element {
 
   return (
     <View>
-        <Text>Hello React Native</Text>
+      <LinearGradient
+        style={styles.gradient}
+        colors={['#4c669f', '#3b5998', '#192f6a']}
+      >
+        <SafeAreaView style={styles.SafeAreaView}>
+          {
+            renderItem === "GameStart" && <GameStart changeScreen={changeScreen} />
+          }
+          {
+            renderItem === "Game" && <Game userNumber={no} setRenderItem={setRenderItem} rounds={rounds} setRounds={setRounds} />
+          }
+
+          {
+            renderItem === "GameEnd" && <GameEnd no={no} setNo={setNo} rounds={rounds} setRounds={setRounds} setRenderItem={setRenderItem} />
+          }
+
+          <ImageBackground
+            resizeMode="contain"
+            source={require("./assets/shield.png")}
+            style={styles.image}
+          >
+          </ImageBackground>
+
+        </SafeAreaView>
+
+      </LinearGradient>
     </View>
-  
+
   );
 }
 
 const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
+  gradient: {
+    height: "100%",
   },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
+  image: {
+    flex: 1,
+    opacity: 0.15
   },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
+  SafeAreaView: {
+    flex: 1
+  }
+
 });
 
 export default App;
