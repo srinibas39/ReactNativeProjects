@@ -3,21 +3,18 @@ import { Pressable, View, Text, StyleSheet } from "react-native"
 
 interface ItemProps {
     title: string,
-    color: string
+    color: string,
+    onPress: () => void
 }
 
 
 
 
-export const Item = ({ title, color }: ItemProps) => {
+export const Item = ({ title, color, onPress }: ItemProps) => {
 
-    const handlePress = () => {
-        console.log("pressed");
-
-
-    }
+  
     return <View style={[styles.itemContainer, { backgroundColor: color }]}>
-        <Pressable style={styles.button} android_ripple={{ color: "#fff" }} onPress={handlePress}>
+        <Pressable style={styles.button} android_ripple={{ color: "#fff" }} onPress={onPress}>
             <View style={styles.innerContainer} >
                 <Text style={styles.font}>{title}</Text>
             </View>
@@ -55,10 +52,10 @@ const styles = StyleSheet.create({
     iosRipple: {
         color: "#ccc"
     },
-    font:{
-        fontSize:18,
-        fontWeight:"bold",
-        color:"black"
+    font: {
+        fontSize: 18,
+        fontWeight: "bold",
+        color: "black"
     }
 
 })

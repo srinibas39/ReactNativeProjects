@@ -6,7 +6,6 @@
  */
 
 import React from 'react';
-import type { PropsWithChildren } from 'react';
 import {
   SafeAreaView,
 
@@ -21,7 +20,10 @@ import {
 import {
   Colors,
 } from 'react-native/Libraries/NewAppScreen';
-import { CategoriesScreen } from './screen/categoriesScreen';
+import { CategoriesScreen } from './screens/categoriesScreen';
+import { NavigationContainer} from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { MealsScreen } from './screens/MealsScreen';
 
 
 
@@ -33,11 +35,21 @@ function App(): JSX.Element {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
+  const Stack = createStackNavigator()
+ 
+
   return (
-    <SafeAreaView style={[backgroundStyle, styles.app]} >
+    <>
       <StatusBar barStyle={"light-content"} />
-      <CategoriesScreen />
-    </SafeAreaView>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen name={"mealsContainer"} component={CategoriesScreen} />
+          <Stack.Screen name={"mealsOverview"} component={MealsScreen}/>
+        </Stack.Navigator>
+      </NavigationContainer>
+    </>
+
+
   );
 }
 
