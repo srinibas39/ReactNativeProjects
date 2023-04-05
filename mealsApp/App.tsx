@@ -21,7 +21,7 @@ import {
   Colors,
 } from 'react-native/Libraries/NewAppScreen';
 import { CategoriesScreen } from './screens/categoriesScreen';
-import { NavigationContainer} from '@react-navigation/native';
+import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { MealsScreen } from './screens/MealsScreen';
 
@@ -36,15 +36,22 @@ function App(): JSX.Element {
   };
 
   const Stack = createStackNavigator()
- 
+
 
   return (
     <>
       <StatusBar barStyle={"light-content"} />
       <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen name={"mealsContainer"} component={CategoriesScreen} />
-          <Stack.Screen name={"mealsOverview"} component={MealsScreen}/>
+        <Stack.Navigator screenOptions={{
+          headerStyle: { backgroundColor: "black" },
+          headerTintColor: "#fff",
+          cardStyle: { backgroundColor: "#454545" },
+          headerTitleAlign: "center"
+        }}>
+          <Stack.Screen name={"mealsContainer"} options={{
+            title: "All Categories",
+          }} component={CategoriesScreen} />
+          <Stack.Screen name={"mealsOverview"} component={MealsScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </>

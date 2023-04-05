@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     },
 
     text: {
-        color: "black",
+        color: "white",
         fontSize: 16,
         textAlign: "center",
         marginVertical: 8,
@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
 
     },
     detailText: {
-        color: "black",
+        color: "white",
         marginHorizontal: 4
     }
 })
