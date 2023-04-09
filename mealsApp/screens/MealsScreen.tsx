@@ -22,7 +22,8 @@ export const MealsScreen = () => {
             imageUrl: item.imageUrl,
             complexity: item.complexity,
             affordability: item.affordability,
-            duration: item.duration
+            duration: item.duration,
+            id: item.id
 
         }
         return <MealItem {...mealItemProps} />

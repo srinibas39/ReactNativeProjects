@@ -1,32 +1,54 @@
+import { useNavigation, useRoute } from "@react-navigation/native";
+import { useLayoutEffect } from "react";
 import { View, Text, StyleSheet, Pressable, Image, Platform } from "react-native";
+import { CATEGORIES } from "../data/dummyData";
+import { MealDetail } from "./MealDetails";
 
 interface MealItemProps {
     title: string,
     imageUrl: string,
     complexity: string,
     affordability: string,
-    duration: string
+    duration: string,
+    id: string
 }
 
 export const MealItem = (props: MealItemProps) => {
 
-    const { title, imageUrl, complexity, affordability, duration } = props
 
-    console.log(imageUrl);
+    const route = useRoute<any>();
+    const idx = route.params?.id
+
+    const navigation = useNavigation<any>();
+
+    const { title, imageUrl, complexity, affordability, duration, id } = props
+
+    const handlePress = () => {
+        navigation.navigate("mealsDetail", { mealId: id })
+    }
+
+    useLayoutEffect(() => {
+
+        const navigationTitle = CATEGORIES.find((category) => category.id === idx)?.title
+
+        navigation.setOptions({ title: navigationTitle })
+
+    }, [idx, navigation])
 
 
     return <View style={styles.mealItem}>
-        <Pressable android_ripple={{ color: "#ccc" }} style={({ pressed }) => pressed ? [styles.pressable, styles.iosRipple] : styles.pressable}>
+        <Pressable
+            onPress={handlePress}
+            android_ripple={{ color: "#ccc" }}
+            style={({ pressed }) => pressed ? [styles.pressable, styles.iosRipple] : styles.pressable}
+        >
             <View >
                 <View>
                     <Image source={{ uri: imageUrl }} style={styles.image} />
                     <Text style={styles.text}>{title}</Text>
                 </View>
-                <View style={styles.details}>
-                    <Text style={styles.detailText}>{complexity.toUpperCase()}</Text>
-                    <Text style={styles.detailText}>{duration}min</Text>
-                    <Text style={styles.detailText}>{affordability.toUpperCase()}</Text>
-                </View>
+
+                <MealDetail affordability={affordability} complexity={complexity} duration={duration} />
 
             </View>
         </Pressable>
@@ -72,14 +94,5 @@ const styles = StyleSheet.create({
         height: 200,
         width: "100%"
     },
-    details: {
-        flexDirection: "row",
-        justifyContent: "center",
-        alignItems: "center",
 
-    },
-    detailText: {
-        color: "white",
-        marginHorizontal: 4
-    }
 })

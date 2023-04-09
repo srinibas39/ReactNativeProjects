@@ -24,6 +24,7 @@ import { CategoriesScreen } from './screens/categoriesScreen';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { MealsScreen } from './screens/MealsScreen';
+import { MealsDetailScreen } from './screens/MealsDetailScreen';
 
 
 
@@ -52,6 +53,7 @@ function App(): JSX.Element {
             title: "All Categories",
           }} component={CategoriesScreen} />
           <Stack.Screen name={"mealsOverview"} component={MealsScreen} />
+          <Stack.Screen name={"mealsDetail"} component={MealsDetailScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </>
