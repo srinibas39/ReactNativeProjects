@@ -50,7 +50,8 @@ export const MealsDetailScreen = () => {
 const styles = StyleSheet.create({
     mealDetail: {
         flex: 1,
-        padding: 16
+        padding: 16,
+        marginBottom:20
     },
     image: {
         height: 350,
