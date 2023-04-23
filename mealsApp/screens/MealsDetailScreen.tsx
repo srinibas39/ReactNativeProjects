@@ -64,31 +64,5 @@ const styles = StyleSheet.create({
         margin: 10,
         color: "#fff"
     },
-    stepTitle: {
-        marginVertical: 10,
-        height: 40,
-        // backgroundColor:"#fbbf24",
-        borderBottomWidth: 2,
-        borderBottomColor: "#fbbf24"
 
-    },
-    stepText: {
-        color: "#fbbf24",
-        fontSize: 20,
-        textAlign: "center",
-    },
-    mealSteps: {
-        height: 40,
-        backgroundColor: "#fbbf24",
-        marginVertical: 10,
-        justifyContent: "center",
-        alignItems: "center"
-
-    },
-    mealStepsText: {
-        color: "black",
-        fontSize: 19,
-        fontWeight: "bold",
-
-    }
 })
