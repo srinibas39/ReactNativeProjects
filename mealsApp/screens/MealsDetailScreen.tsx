@@ -6,26 +6,48 @@ import { StepTitle } from "../components/StepTitle";
 import { ScrollView } from "react-native-gesture-handler";
 import { SelectedMeal } from "../components/SelectedMeal";
 import { useLayoutEffect } from "react";
+import { useFavorite } from "../store/context/favoritesContext";
 
+// interface FavoriteContextType {
+//     ids: string[];
+//     updateFavorites: (id: string) => void;
+//     removeFavorites: (id: string) => void;
+//   }
 
 
 export const MealsDetailScreen = () => {
     const route = useRoute<any>();
     const navigation = useNavigation<any>();
 
+    const { ids, updateFavorites, removeFavorites } = useFavorite();
+
     const mealId = route.params.mealId;
 
     const selectedMeal = MEALS.find((meal) => meal.id === mealId)
 
-    const handleButton=()=>{
-        console.log("pressed");  
+    const checkFavorites = ids.includes(mealId);
+
+    const handleButton = (type: string) => {
+        if (type === "remove") {
+            removeFavorites(mealId)
+        }
+        else{
+            updateFavorites(mealId)
+        }
     }
 
     useLayoutEffect(() => {
         navigation.setOptions({
-            headerRight: () => <Button title={"Favorites"} onPress={handleButton} />
-        })
-    }, [])
+          headerRight: () => {
+            return checkFavorites ? (
+              <Button title="ADDED" onPress={() => handleButton("remove")} />
+            ) : (
+              <Button title="FAVORITES" onPress={() => handleButton("add")} />
+            );
+          },
+        });
+      }, [checkFavorites]);
+    
 
     return <ScrollView style={styles.mealDetail}>
         <Image source={{ uri: selectedMeal?.imageUrl }} style={styles.image} />
@@ -51,7 +73,7 @@ const styles = StyleSheet.create({
     mealDetail: {
         flex: 1,
         padding: 16,
-        marginBottom:20
+        marginBottom: 20
     },
     image: {
         height: 350,

@@ -6,10 +6,10 @@ interface FavoriteContextType {
   removeFavorites: (id: string) => void;
 }
 
-const FavoritesContext = createContext<FavoriteContextType | undefined>({
+const FavoritesContext = createContext<FavoriteContextType>({
   ids: [],
-  updateFavorites: (id) => {},
-  removeFavorites: (id) => {},
+  updateFavorites: (id) => { },
+  removeFavorites: (id) => { },
 });
 
 interface FavoritesProviderType {
@@ -20,11 +20,14 @@ export const FavoriteProvider = ({ children }: FavoritesProviderType) => {
   const [ids, setIds] = useState<string[]>([]);
 
   const updateFavorites = (id: string) => {
-    // setIds([...ids, id]);
+    setIds((p) => [...p, id])
   };
 
   const removeFavorites = (id: string) => {
     // setIds(ids.filter((item) => item !== id));
+    setIds(
+      ids.filter((idx) => idx !== id)
+    )
   };
 
   const contextValue: FavoriteContextType = {
