@@ -1,8 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
 
-
+import FavoriteReducer from "./favorites"
 export const store= configureStore({
-    reducer:{}
+    reducer:{
+        favoriteMeals:FavoriteReducer
+    }
 })
 
 // infering the type of rootstate and app dispatch
