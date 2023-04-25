@@ -29,6 +29,8 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import { Favoritescreen } from './screens/FavoritesScreen';
 import Ionicons from 'react-native-ionicons';
 import { FavoriteProvider } from './store/context/favoritesContext';
+import { Provider } from 'react-redux';
+import { store } from './store/redux/store';
 
 
 
@@ -73,22 +75,24 @@ function App(): JSX.Element {
   return (
     <>
       <StatusBar barStyle={"light-content"} />
-      <FavoriteProvider>
-        <NavigationContainer>
-          <Stack.Navigator screenOptions={{
-            headerStyle: { backgroundColor: "black" },
-            headerTintColor: "#fff",
-            cardStyle: { backgroundColor: "#454545" },
-            headerTitleAlign: "center"
-          }}>
-            <Stack.Screen name={"mealsContainer"} options={{
-              headerShown: false,
-            }} component={DrawerContainer} />
-            <Stack.Screen name={"mealsOverview"} component={MealsScreen} />
-            <Stack.Screen name={"mealsDetail"} component={MealsDetailScreen} />
-          </Stack.Navigator>
-        </NavigationContainer>
-      </FavoriteProvider>
+      <Provider store={store}>
+        <FavoriteProvider>
+          <NavigationContainer>
+            <Stack.Navigator screenOptions={{
+              headerStyle: { backgroundColor: "black" },
+              headerTintColor: "#fff",
+              cardStyle: { backgroundColor: "#454545" },
+              headerTitleAlign: "center"
+            }}>
+              <Stack.Screen name={"mealsContainer"} options={{
+                headerShown: false,
+              }} component={DrawerContainer} />
+              <Stack.Screen name={"mealsOverview"} component={MealsScreen} />
+              <Stack.Screen name={"mealsDetail"} component={MealsDetailScreen} />
+            </Stack.Navigator>
+          </NavigationContainer>
+        </FavoriteProvider>
+      </Provider>
     </>
 
 
