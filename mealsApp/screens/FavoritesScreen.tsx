@@ -1,7 +1,11 @@
-import { View , Text} from "react-native";
+import { View, Text } from "react-native";
+import { MealList } from "../components/MealList";
+import { useFavorite } from "../store/context/favoritesContext";
+import { MEALS } from "../data/dummyData";
 
 export const Favoritescreen = () => {
-    return <View>
-        <Text>I am Favorites Screen</Text>
-    </View>
+    const { ids } = useFavorite();
+    const favoriteMeals = MEALS.filter((meal: any) => ids.includes(meal?.id))
+    
+    return <MealList mealsData={favoriteMeals}/>
 }
