@@ -7,6 +7,9 @@ import { ScrollView } from "react-native-gesture-handler";
 import { SelectedMeal } from "../components/SelectedMeal";
 import { useLayoutEffect } from "react";
 import { useFavorite } from "../store/context/favoritesContext";
+import { useDispatch, useSelector } from "react-redux";
+import { addFavorites, removeFavorites } from "../store/redux/favorites";
+
 
 // interface FavoriteContextType {
 //     ids: string[];
@@ -15,39 +18,56 @@ import { useFavorite } from "../store/context/favoritesContext";
 //   }
 
 
+interface stateType {
+    favoriteMeals: {
+        ids: string[]
+    }
+}
+
+
 export const MealsDetailScreen = () => {
     const route = useRoute<any>();
     const navigation = useNavigation<any>();
 
-    const { ids, updateFavorites, removeFavorites } = useFavorite();
+
+    // context
+    // const { ids, updateFavorites, removeFavorites } = useFavorite();
+    // redux
+    const mealids = useSelector((state: stateType) => state?.favoriteMeals?.ids);
+
+    const dispatch = useDispatch();
+
 
     const mealId = route.params.mealId;
 
     const selectedMeal = MEALS.find((meal) => meal.id === mealId)
 
-    const checkFavorites = ids.includes(mealId);
+    // const checkFavorites = ids.includes(mealId);
+    const checkFavorites = mealids.includes(mealId)
 
     const handleButton = (type: string) => {
         if (type === "remove") {
-            removeFavorites(mealId)
+            //  removeFavorites(mealId)
+            dispatch(removeFavorites({ id: mealId }))
         }
-        else{
-            updateFavorites(mealId)
+        else {
+            // updateFavorites(mealId)
+            dispatch(addFavorites({ id: mealId }))
         }
     }
 
     useLayoutEffect(() => {
         navigation.setOptions({
-          headerRight: () => {
-            return checkFavorites ? (
-              <Button title="ADDED" onPress={() => handleButton("remove")} />
-            ) : (
-              <Button title="FAVORITES" onPress={() => handleButton("add")} />
-            );
-          },
+            headerRight: () => {
+                return checkFavorites ? (
+                    <Button title="ADDED" onPress={() => handleButton("remove")} />
+                ) : (
+                    <Button title="FAVORITES" onPress={() => handleButton("add")} />
+                );
+            },
         });
-      }, [checkFavorites]);
-    
+    }, [checkFavorites]);
+
 
     return <ScrollView style={styles.mealDetail}>
         <Image source={{ uri: selectedMeal?.imageUrl }} style={styles.image} />
