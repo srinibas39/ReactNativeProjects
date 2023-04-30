@@ -6,7 +6,7 @@
  */
 import 'react-native-gesture-handler';
 import React from 'react';
-import type {PropsWithChildren} from 'react';
+import type { PropsWithChildren } from 'react';
 import {
   SafeAreaView,
   StatusBar,
@@ -19,30 +19,75 @@ import {
 import {
   Colors,
 } from 'react-native/Libraries/NewAppScreen';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { AllExpense } from './screens/AllExpense';
+import { ManagingExpense } from './screens/ManagingExpense';
+import { RecentExpense } from './screens/RecentExpense';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 type SectionProps = PropsWithChildren<{
   title: string;
 }>;
 
 
+
+
 function App(): JSX.Element {
+  const Stack = createStackNavigator();
+  const BottomTab = createBottomTabNavigator()
   const isDarkMode = useColorScheme() === 'dark';
 
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
+
+  const BottomTabNavigator = () => {
+    return <BottomTab.Navigator screenOptions={{
+      headerStyle: { backgroundColor: "#020617" },
+      headerTintColor: "#22c55e",
+      tabBarStyle: {
+        backgroundColor: "#020617",
+      },
+      tabBarActiveTintColor: "#22c55e"
+    }}>
+      <BottomTab.Screen name={"All Expense"} component={AllExpense} options={
+        {
+
+          tabBarIcon: ({ color, size }) => <Icon name="list" color={color} size={size} />
+
+        }
+      } />
+      <BottomTab.Screen name={"Recent Expense"} component={RecentExpense} options={
+        {
+          tabBarIcon: ({ color, size }) => <Icon name="pie-chart" color={color} size={size} />
+
+        }
+      } />
+    </BottomTab.Navigator>
+  }
+
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <View>
-        <Text>Hello Expense Tracker</Text>
-      </View>
-      
-    </SafeAreaView>
+    // <SafeAreaView style={backgroundStyle}>
+    //   <StatusBar
+    //     barStyle={isDarkMode ? 'light-content' : 'dark-content'}
+    //     backgroundColor={backgroundStyle.backgroundColor}
+    //   />
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name={"Main Screen"} component={BottomTabNavigator} options={
+          {
+            headerShown: false,
+          }
+        } />
+        <Stack.Screen name={"Managing Expense"} component={ManagingExpense} />
+      </Stack.Navigator>
+    </NavigationContainer>
+
+
+    // </SafeAreaView>
   );
 }
 
