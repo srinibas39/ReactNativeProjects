@@ -2,7 +2,7 @@ import { View, Text, StyleSheet } from "react-native";
 
 interface PeriodProps {
     expenses: {
-        id: number,
+        id: string,
         description: string,
         amount: number,
         date: Date

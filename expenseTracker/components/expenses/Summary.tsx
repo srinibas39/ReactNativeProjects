@@ -5,7 +5,7 @@ import { FlatList } from "react-native-gesture-handler"
 
 interface SummaryProps {
     expenses: {
-        id: number,
+        id: string,
         description: string,
         amount: number,
         date: Date
@@ -26,8 +26,8 @@ export const Summary = (props: SummaryProps) => {
     }
 
 
-    return <FlatList data={expenses} keyExtractor={(item) => item.id.toString()} renderItem={({ item }) => {
-        return <Pressable onPress={() => handlePress(item?.id.toString())} style={({ pressed }) => pressed && styles.pressed}>
+    return <FlatList data={expenses} keyExtractor={(item) => item.id} renderItem={({ item }) => {
+        return <Pressable onPress={() => handlePress(item?.id)} style={({ pressed }) => pressed && styles.pressed}>
             <View style={styles.itemContainer}>
                 <View style={styles.itemContainerDetails}>
                     <Text style={styles.itemDescription}>{item?.description}</Text>

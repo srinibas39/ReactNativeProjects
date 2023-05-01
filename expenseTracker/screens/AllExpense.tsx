@@ -1,9 +1,13 @@
 import { View, Text, StyleSheet } from "react-native";
 import { ExpensesOutput } from "../components/expenses/ExpensesOutput";
+import { useExpense } from "../store/ExpenseContext";
 
 export const AllExpense = () => {
+
+    const { expenses } = useExpense();
+
     return <View style={styles.allExpensesContainer}>
-        <ExpensesOutput periodName={"Total"} />
+        <ExpensesOutput expenses={expenses} periodName={"Total"} />
     </View>
 }
 

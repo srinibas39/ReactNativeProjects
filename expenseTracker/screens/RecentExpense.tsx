@@ -1,9 +1,24 @@
 import { View, Text, StyleSheet } from "react-native";
 import { ExpensesOutput } from "../components/expenses/ExpensesOutput";
+import { useExpense } from "../store/ExpenseContext";
 
 export const RecentExpense = () => {
+
+    const { expenses } = useExpense()
+
+    const calculateRecent7Days = (date: Date, days: number) => {
+        return new Date(date.getFullYear(), date.getMonth(), date.getDate() - days)
+    }
+
+    const calculateRecentExpenses = expenses.filter((expense) => {
+        const today = new Date();
+        const recent7Days = calculateRecent7Days(today, 7)
+
+        return expense.date > recent7Days;
+    })
+
     return <View style={styles.allExpensesContainer}>
-        <ExpensesOutput periodName={"Total"} />
+        <ExpensesOutput expenses={calculateRecentExpenses} periodName={"Total"} />
     </View>
 }
 

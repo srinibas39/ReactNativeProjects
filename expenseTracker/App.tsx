@@ -27,6 +27,7 @@ import { ManagingExpense } from './screens/ManagingExpense';
 import { RecentExpense } from './screens/RecentExpense';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { IconButton } from './components/icon/iconButton';
+import { ExpenseContextProvider } from './store/ExpenseContext';
 
 type SectionProps = PropsWithChildren<{
   title: string;
@@ -80,20 +81,22 @@ function App(): JSX.Element {
     //     barStyle={isDarkMode ? 'light-content' : 'dark-content'}
     //     backgroundColor={backgroundStyle.backgroundColor}
     //   />
-    <NavigationContainer>
-      <Stack.Navigator screenOptions={{
-        headerStyle: { backgroundColor: "#020617" },
-        headerTintColor: "#22c55e",
-        presentation: "modal"
-      }}>
-        <Stack.Screen name={"Main Screen"} component={BottomTabNavigator} options={
-          {
-            headerShown: false,
-          }
-        } />
-        <Stack.Screen name={"Managing Expense"} component={ManagingExpense} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <ExpenseContextProvider>
+      <NavigationContainer>
+        <Stack.Navigator screenOptions={{
+          headerStyle: { backgroundColor: "#020617" },
+          headerTintColor: "#22c55e",
+          presentation: "modal"
+        }}>
+          <Stack.Screen name={"Main Screen"} component={BottomTabNavigator} options={
+            {
+              headerShown: false,
+            }
+          } />
+          <Stack.Screen name={"Managing Expense"} component={ManagingExpense} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </ExpenseContextProvider>
 
 
     // </SafeAreaView>
