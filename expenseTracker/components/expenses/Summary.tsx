@@ -10,10 +10,12 @@ interface SummaryProps {
         amount: number,
         date: Date
     }[],
+    fallbackText: string
 }
 
 export const Summary = (props: SummaryProps) => {
-    const { expenses } = props;
+    const { expenses, fallbackText } = props;
+
 
     const navigation = useNavigation<StackNavigationProp<ParamListBase>>();
 
@@ -26,19 +28,29 @@ export const Summary = (props: SummaryProps) => {
     }
 
 
-    return <FlatList data={expenses} keyExtractor={(item) => item.id} renderItem={({ item }) => {
-        return <Pressable onPress={() => handlePress(item?.id)} style={({ pressed }) => pressed && styles.pressed}>
-            <View style={styles.itemContainer}>
-                <View style={styles.itemContainerDetails}>
-                    <Text style={styles.itemDescription}>{item?.description}</Text>
-                    <Text style={styles.itemDate}>{dateFormat(item?.date)}</Text>
+    return <>
+        {
+            expenses.length ? <FlatList data={expenses} keyExtractor={(item) => item.id} renderItem={({ item }) => {
+                return <Pressable onPress={() => handlePress(item?.id)} style={({ pressed }) => pressed && styles.pressed}>
+                    <View style={styles.itemContainer}>
+                        <View style={styles.itemContainerDetails}>
+                            <Text style={styles.itemDescription}>{item?.description}</Text>
+                            <Text style={styles.itemDate}>{dateFormat(item?.date)}</Text>
+                        </View>
+                        <View style={styles.itemAmountContainer}>
+                            <Text style={styles.itemAmount}>&#x20b9;{item?.amount}</Text>
+                        </View>
+                    </View>
+                </Pressable >
+            }} /> :
+                <View style={styles.fallBack}>
+                    <Text style={styles.fallBackText}>{fallbackText}</Text>
                 </View>
-                <View style={styles.itemAmountContainer}>
-                    <Text style={styles.itemAmount}>&#x20b9;{item?.amount}</Text>
-                </View>
-            </View>
-        </Pressable >
-    }} />
+        }
+
+
+
+    </>
 }
 
 const styles = StyleSheet.create({
@@ -76,6 +88,17 @@ const styles = StyleSheet.create({
     },
     pressed: {
         opacity: 0.5
+    },
+    fallBack: {
+        flexDirection: "row",
+        justifyContent: "center",
+        alignItems: "center",
+        marginVertical: 16
+    },
+    fallBackText: {
+        color: "#22c55e",
+        fontSize: 18
     }
+
 
 })

@@ -7,7 +7,7 @@ export const AllExpense = () => {
     const { expenses } = useExpense();
 
     return <View style={styles.allExpensesContainer}>
-        <ExpensesOutput expenses={expenses} periodName={"Total"} />
+        <ExpensesOutput expenses={expenses} periodName={"Total"} fallbackText={"No Expenses Exist!!!"}/>
     </View>
 }
 

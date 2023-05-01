@@ -18,7 +18,7 @@ export const RecentExpense = () => {
     })
 
     return <View style={styles.allExpensesContainer}>
-        <ExpensesOutput expenses={calculateRecentExpenses} periodName={"Total"} />
+        <ExpensesOutput expenses={calculateRecentExpenses} periodName={"Total"} fallbackText={"No Recent Expenses Exist!!!"} />
     </View>
 }
 

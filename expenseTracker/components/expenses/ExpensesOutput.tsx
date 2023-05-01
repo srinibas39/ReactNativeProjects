@@ -9,16 +9,17 @@ interface ExpensesOutputProps {
         amount: number,
         date: Date
     }[],
-    periodName: string
+    periodName: string,
+    fallbackText: string
 }
 
 
 
 export const ExpensesOutput = (props: ExpensesOutputProps) => {
-    const { expenses, periodName } = props
+    const { expenses, periodName, fallbackText } = props
     return <View style={styles.expensesOutputContainer}>
         <Period expenses={expenses} periodName={periodName} />
-        <Summary expenses={expenses} />
+        <Summary expenses={expenses} fallbackText={fallbackText} />
     </View>
 }
 
