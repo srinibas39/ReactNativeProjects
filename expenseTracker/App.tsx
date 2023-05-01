@@ -26,6 +26,7 @@ import { AllExpense } from './screens/AllExpense';
 import { ManagingExpense } from './screens/ManagingExpense';
 import { RecentExpense } from './screens/RecentExpense';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { IconButton } from './components/icon/iconButton';
 
 type SectionProps = PropsWithChildren<{
   title: string;
@@ -45,14 +46,18 @@ function App(): JSX.Element {
 
 
   const BottomTabNavigator = () => {
-    return <BottomTab.Navigator screenOptions={{
+
+   
+    return <BottomTab.Navigator screenOptions={({ navigation }) => ({
       headerStyle: { backgroundColor: "#020617" },
       headerTintColor: "#22c55e",
       tabBarStyle: {
         backgroundColor: "#020617",
       },
-      tabBarActiveTintColor: "#22c55e"
-    }}>
+      tabBarActiveTintColor: "#22c55e",
+      headerRight: () => <IconButton name="add" color={"#22c55e"} size={24}
+        onPress={() => navigation.navigate("Managing Expense")} style={styles.icon} />
+    })}>
       <BottomTab.Screen name={"All Expense"} component={AllExpense} options={
         {
 
@@ -108,6 +113,9 @@ const styles = StyleSheet.create({
   highlight: {
     fontWeight: '700',
   },
+  icon: {
+    marginRight: 16
+  }
 });
 
 export default App;

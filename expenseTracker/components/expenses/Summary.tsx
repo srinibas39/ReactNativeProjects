@@ -1,3 +1,5 @@
+import { ParamListBase, useNavigation } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
 import { View, Text, StyleSheet, Pressable } from "react-native"
 import { FlatList } from "react-native-gesture-handler"
 
@@ -9,13 +11,23 @@ interface SummaryProps {
         date: Date
     }[],
 }
+
 export const Summary = (props: SummaryProps) => {
     const { expenses } = props;
+
+    const navigation = useNavigation<StackNavigationProp<ParamListBase>>();
+
     const dateFormat = (date: Date) => {
         return `${date.getDate()} - ${date.getMonth() + 1} - ${date.getFullYear()}`
     }
+
+    const handlePress = () => {
+        navigation.navigate("Managing Expense")
+    }
+
+
     return <FlatList data={expenses} keyExtractor={(item) => item.id.toString()} renderItem={({ item }) => {
-        return <Pressable>
+        return <Pressable onPress={handlePress} style={({ pressed }) => pressed && styles.pressed}>
             <View style={styles.itemContainer}>
                 <View style={styles.itemContainerDetails}>
                     <Text style={styles.itemDescription}>{item?.description}</Text>
@@ -25,7 +37,7 @@ export const Summary = (props: SummaryProps) => {
                     <Text style={styles.itemAmount}>&#x20b9;{item?.amount}</Text>
                 </View>
             </View>
-        </Pressable>
+        </Pressable >
     }} />
 }
 
@@ -61,6 +73,9 @@ const styles = StyleSheet.create({
         color: "#020617",
         fontSize: 18,
         fontWeight: "bold"
+    },
+    pressed: {
+        opacity: 0.5
     }
 
 })
