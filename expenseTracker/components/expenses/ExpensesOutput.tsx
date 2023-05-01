@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import { Period } from "./Period";
 import { Summary } from "./Summary";
 
@@ -42,8 +42,15 @@ const dummyExpenses = [
 
 export const ExpensesOutput = (props: ExpensesOutputProps) => {
     const { periodName } = props
-    return <View>
+    return <View style={styles.expensesOutputContainer}>
         <Period expenses={dummyExpenses} periodName={periodName} />
         <Summary expenses={dummyExpenses} />
     </View>
 }
+
+const styles = StyleSheet.create({
+    expensesOutputContainer:{
+        flex:1,
+        marginBottom:10
+    }
+})
