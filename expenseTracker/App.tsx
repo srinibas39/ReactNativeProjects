@@ -56,7 +56,7 @@ function App(): JSX.Element {
       },
       tabBarActiveTintColor: "#22c55e",
       headerRight: () => <IconButton name="add" color={"#22c55e"} size={24}
-        onPress={() => navigation.navigate("Managing Expense")} style={styles.icon} />
+        onPress={() => navigation.navigate("Managing Expense", { expenseId: "" })} style={styles.icon} />
     })}>
       <BottomTab.Screen name={"All Expense"} component={AllExpense} options={
         {
@@ -84,7 +84,7 @@ function App(): JSX.Element {
       <Stack.Navigator screenOptions={{
         headerStyle: { backgroundColor: "#020617" },
         headerTintColor: "#22c55e",
-        presentation:"modal"
+        presentation: "modal"
       }}>
         <Stack.Screen name={"Main Screen"} component={BottomTabNavigator} options={
           {

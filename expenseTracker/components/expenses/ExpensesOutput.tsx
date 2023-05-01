@@ -7,7 +7,7 @@ interface ExpensesOutputProps {
 }
 const dummyExpenses = [
     {
-        id: 0,
+        id: 9,
         description: "hello banana",
         amount: 20,
         date: new Date('2023-12-01')
@@ -49,8 +49,8 @@ export const ExpensesOutput = (props: ExpensesOutputProps) => {
 }
 
 const styles = StyleSheet.create({
-    expensesOutputContainer:{
-        flex:1,
-        marginBottom:10
+    expensesOutputContainer: {
+        flex: 1,
+        marginBottom: 10
     }
 })

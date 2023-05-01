@@ -21,13 +21,13 @@ export const Summary = (props: SummaryProps) => {
         return `${date.getDate()} - ${date.getMonth() + 1} - ${date.getFullYear()}`
     }
 
-    const handlePress = () => {
-        navigation.navigate("Managing Expense")
+    const handlePress = (id: string) => {
+        navigation.navigate("Managing Expense", { expenseId: id })
     }
 
 
     return <FlatList data={expenses} keyExtractor={(item) => item.id.toString()} renderItem={({ item }) => {
-        return <Pressable onPress={handlePress} style={({ pressed }) => pressed && styles.pressed}>
+        return <Pressable onPress={() => handlePress(item?.id.toString())} style={({ pressed }) => pressed && styles.pressed}>
             <View style={styles.itemContainer}>
                 <View style={styles.itemContainerDetails}>
                     <Text style={styles.itemDescription}>{item?.description}</Text>
