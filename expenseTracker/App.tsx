@@ -47,7 +47,7 @@ function App(): JSX.Element {
 
   const BottomTabNavigator = () => {
 
-   
+
     return <BottomTab.Navigator screenOptions={({ navigation }) => ({
       headerStyle: { backgroundColor: "#020617" },
       headerTintColor: "#22c55e",
@@ -81,7 +81,11 @@ function App(): JSX.Element {
     //     backgroundColor={backgroundStyle.backgroundColor}
     //   />
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator screenOptions={{
+        headerStyle: { backgroundColor: "#020617" },
+        headerTintColor: "#22c55e",
+        presentation:"modal"
+      }}>
         <Stack.Screen name={"Main Screen"} component={BottomTabNavigator} options={
           {
             headerShown: false,
