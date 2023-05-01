@@ -3,14 +3,17 @@ import { useLayoutEffect } from "react";
 import { View, Text, StyleSheet } from "react-native"
 import { IconButton } from "../components/icon/iconButton";
 import { Button } from "../components/Button/Button";
+import { useExpense } from "../store/ExpenseContext";
 
 export const ManagingExpense = () => {
     const route = useRoute<any>();
     const { expenseId } = route.params;
     const expenseIdExist = !!expenseId;
     const navigation = useNavigation<any>()
+    const { removeExpense, updateExpense } = useExpense();
 
     const handleDelete = () => {
+        removeExpense(expenseId)
         navigation.goBack()
     }
 
@@ -19,6 +22,13 @@ export const ManagingExpense = () => {
     }
 
     const handleUpdate = () => {
+        updateExpense(expenseId, {
+            id: "10",
+            description: "I am potato",
+            amount: 100,
+            date: new Date('2023-5-4')
+        })
+
         navigation.goBack()
     }
 

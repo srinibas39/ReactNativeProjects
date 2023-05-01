@@ -89,7 +89,7 @@ export const ExpenseContextProvider = ({ children }: ExpenseContextProviderType)
         }
     };
 
-   
+
 
     const [expenseState, expenseDispatch] = useReducer(expenseReducer, dummyExpenses)
 

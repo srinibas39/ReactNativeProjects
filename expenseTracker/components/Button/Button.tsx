@@ -8,7 +8,7 @@ interface buttonProps {
 
 export const Button = ({ children, type, onPress }: buttonProps) => {
     return <View style={styles.buttonContainer}>
-        <Pressable style={({ pressed }) => pressed && styles.pressed}>
+        <Pressable onPress={onPress} style={({ pressed }) => pressed && styles.pressed}>
             <View style={[styles.button, type === "flat" && styles.flat]}>
                 <Text style={styles.buttonText}>{children}</Text>
             </View>
