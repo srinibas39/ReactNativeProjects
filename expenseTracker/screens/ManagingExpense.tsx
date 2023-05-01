@@ -11,15 +11,15 @@ export const ManagingExpense = () => {
     const navigation = useNavigation<any>()
 
     const handleDelete = () => {
-
+        navigation.goBack()
     }
 
     const handleCancel = () => {
-
+        navigation.goBack()
     }
 
     const handleUpdate = () => {
-
+        navigation.goBack()
     }
 
     useLayoutEffect(() => {
