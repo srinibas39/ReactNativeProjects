@@ -11,7 +11,7 @@ interface InputProps {
 export const Input = (props: InputProps) => {
     const { label, inputConfiguration } = props;
     const textStyle = [];
-    textStyle.push(styles.textInput);
+    textStyle.push(styles.textInput)
     if (inputConfiguration && inputConfiguration.multiline) {
         textStyle.push(styles.textInputMultiline)
     }

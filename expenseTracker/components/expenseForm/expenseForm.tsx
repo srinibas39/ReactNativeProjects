@@ -4,16 +4,16 @@ import { Input } from "./Input";
 export const ExpenseForm = () => {
     return <View>
         <Input label={"Amount"} inputConfiguration={
-            { KeyboardType: "decimal-pad" }
+            { keyboardType: "decimal-pad" }
         } />
         <Input label={"Date"} inputConfiguration={
             {
-                placeholder: "YYYY-MM-DD"
+                placeholder: "YYYY-MM-DD",
+                maxLength: 10
             }
         } />
         <Input label={"Description"} inputConfiguration={
             {
-
                 autoCorrect: false,
                 autoCapitalize: false,
                 multiline: true,
