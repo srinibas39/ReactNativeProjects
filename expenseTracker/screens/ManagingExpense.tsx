@@ -4,6 +4,7 @@ import { View, Text, StyleSheet } from "react-native"
 import { IconButton } from "../components/icon/iconButton";
 import { Button } from "../components/Button/Button";
 import { useExpense } from "../store/ExpenseContext";
+import { ExpenseForm } from "../components/expenseForm/expenseForm";
 
 export const ManagingExpense = () => {
     const route = useRoute<any>();
@@ -39,6 +40,7 @@ export const ManagingExpense = () => {
     }, [])
 
     return <View style={styles.allExpensesContainer}>
+        <ExpenseForm />
         <View>
 
             <View style={styles.buttons}>
