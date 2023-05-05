@@ -5,6 +5,7 @@ import { IconButton } from "../components/icon/iconButton";
 import { Button } from "../components/Button/Button";
 import { useExpense } from "../store/ExpenseContext";
 import { ExpenseForm } from "../components/expenseForm/expenseForm";
+import { useState } from "react";
 
 export const ManagingExpense = () => {
     const route = useRoute<any>();
@@ -12,6 +13,51 @@ export const ManagingExpense = () => {
     const expenseIdExist = !!expenseId;
     const navigation = useNavigation<any>()
     const { removeExpense, updateExpense } = useExpense();
+
+    const [manageForm, setManageForm] = useState({
+        amount: {
+            value: "",
+            valid: true
+        },
+        date: {
+            value: "",
+            valid: true
+        },
+        description: {
+            value: "",
+            valid: true
+        }
+    })
+
+    const handleText = (label: string, value: string,) => {
+        if (label === "Amount") {
+            setManageForm((p) => ({
+                ...p, amount: {
+                    ...p.amount,
+                    value: value,
+                    valid: true
+                }
+            }))
+        }
+        else if (label === "Date") {
+            setManageForm((p) => ({
+                ...p, date: {
+                    ...p.date,
+                    value: value,
+                    valid: true
+                }
+            }))
+        }
+        else {
+            setManageForm((p) => ({
+                ...p, description: {
+                    ...p.description,
+                    value: value,
+                    valid: true
+                }
+            }))
+        }
+    }
 
     const handleDelete = () => {
         removeExpense(expenseId)
@@ -22,15 +68,59 @@ export const ManagingExpense = () => {
         navigation.goBack()
     }
 
-    const handleUpdate = () => {
-        updateExpense(expenseId, {
-            id: "10",
-            description: "I am potato",
-            amount: 100,
-            date: new Date('2023-5-4')
+    const checkValidity = () => {
+        let amountValid = true;
+        let dateValid = true;
+        let descriptionValid = true;
+        // checking amount
+
+        if (!manageForm.amount.value.trim()) {
+            amountValid = false
+            // setManageForm({ ...manageForm, amount: { ...manageForm.amount, valid: false } })
+        }
+        // hecking date
+        if (!manageForm.description.value.trim()) {
+            // setManageForm({ ...manageForm, description: { ...manageForm.description, valid: false } })
+            descriptionValid = false
+        }
+        // }
+        if (!manageForm.date.value.trim()) {
+            // setManageForm({ ...manageForm, description: { ...manageForm.description, valid: false } })
+            dateValid = false
+        }
+        // }
+        setManageForm({
+            ...manageForm,
+            date: { ...manageForm.date, valid: dateValid },
+            amount: { ...manageForm.amount, valid: amountValid },
+            description: { ...manageForm.description, valid: descriptionValid },
         })
 
-        navigation.goBack()
+        if (amountValid && dateValid && descriptionValid) {
+            return true
+        }
+        else {
+            return false;
+        }
+
+    }
+
+    const handleUpdate = () => {
+
+        let isValid = checkValidity();
+
+        if (isValid) {
+            updateExpense(expenseId, {
+                id: Math.random().toString(),
+                description: manageForm.description.value,
+                amount: parseFloat(manageForm.amount.value),
+                date: new Date(manageForm.date.value)
+            })
+
+            navigation.goBack()
+
+        }
+
     }
 
     useLayoutEffect(() => {
@@ -40,7 +130,7 @@ export const ManagingExpense = () => {
     }, [])
 
     return <View style={styles.allExpensesContainer}>
-        <ExpenseForm />
+        <ExpenseForm handleText={handleText} manageForm={manageForm} />
         <View>
 
             <View style={styles.buttons}>

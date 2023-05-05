@@ -4,11 +4,13 @@ interface InputProps {
     label: string,
     inputConfiguration: {
         [key: string]: unknown
-    }
+    },
+    onChangeText: (label: string, value: string,) => void,
+    errorStyle: any
 }
 
 export const Input = (props: InputProps) => {
-    const { label, inputConfiguration } = props;
+    const { label, inputConfiguration, onChangeText, errorStyle } = props;
     const textStyle = [];
     textStyle.push(styles.textInput)
     if (inputConfiguration && inputConfiguration.multiline) {
@@ -18,7 +20,7 @@ export const Input = (props: InputProps) => {
 
     return <View style={styles.InputContainer}>
         <Text style={styles.label}>{label}</Text>
-        <TextInput {...inputConfiguration} style={textStyle} />
+        <TextInput {...inputConfiguration} style={[textStyle, errorStyle]} onChangeText={(text) => onChangeText(label, text)} />
     </View>
 
 }

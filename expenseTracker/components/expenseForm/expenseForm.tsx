@@ -1,28 +1,49 @@
 import { View, Text, StyleSheet } from "react-native";
 import { Input } from "./Input";
+import { useState } from "react";
 
-export const ExpenseForm = () => {
+
+interface ExpenseFormProps {
+    handleText: (label: string, value: string,) => void,
+    manageForm: any
+}
+
+export const ExpenseForm = (props: ExpenseFormProps) => {
+    const { handleText, manageForm } = props
+
+
+
+
     return <View style={styles.expenseFormContainer}>
 
         <View style={styles.form}>
-            <Input label={"Amount"} inputConfiguration={
-                { keyboardType: "decimal-pad" }
-            } />
-            <Input label={"Date"} inputConfiguration={
-                {
+            <Input
+                label={"Amount"}
+                inputConfiguration={{ keyboardType: "decimal-pad" }}
+                onChangeText={handleText}
+                errorStyle={!manageForm.amount.valid ? { backgroundColor: "#fca5a5" } : {}}
+            />
+            <Input
+                label={"Date"}
+                inputConfiguration={{
                     placeholder: "YYYY-MM-DD",
                     maxLength: 10
-                }
-            } />
+                }}
+                onChangeText={handleText}
+                errorStyle={!manageForm.date.valid ? { backgroundColor: "#fca5a5" } : {}}
+            />
         </View>
         <View style={styles.form}>
-            <Input label={"Description"} inputConfiguration={
-                {
+            <Input
+                label={"Description"}
+                inputConfiguration={{
                     autoCorrect: false,
                     autoCapitalize: "none",
                     multiline: true,
-                }
-            } />
+                }}
+                onChangeText={handleText}
+                errorStyle={!manageForm.description.valid ? { backgroundColor: "#fca5a5" } : {}}
+            />
 
         </View>
     </View>
@@ -40,4 +61,5 @@ const styles = StyleSheet.create({
     description: {
 
     }
+
 })
