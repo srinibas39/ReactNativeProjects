@@ -9,22 +9,31 @@ import { useState } from "react";
 
 export const ManagingExpense = () => {
     const route = useRoute<any>();
-    const { expenseId } = route.params;
+    const { expenseId, item } = route.params;
     const expenseIdExist = !!expenseId;
     const navigation = useNavigation<any>()
-    const { removeExpense, updateExpense } = useExpense();
+    const { removeExpense, updateExpense, getExpenses, addExpense } = useExpense();
+
+
+
+    const parsedItem = expenseId && JSON.parse(item)
+    // if (expenseId) {
+
+    //    let currentExpense = getExpenses().filter((el: any) => el?.id === expenseId)
+    // }
+
 
     const [manageForm, setManageForm] = useState({
         amount: {
-            value: "",
+            value: parsedItem?.amount ? JSON.stringify(parsedItem.amount) : "",
             valid: true
         },
         date: {
-            value: "",
+            value: parsedItem?.date ? parsedItem.date : "",
             valid: true
         },
         description: {
-            value: "",
+            value: parsedItem?.description ? parsedItem.description : "",
             valid: true
         }
     })
@@ -123,11 +132,26 @@ export const ManagingExpense = () => {
 
     }
 
+    const handleNew = () => {
+        let isValid = checkValidity();
+        if (isValid) {
+            addExpense({
+                id: Math.random().toString(),
+                description: manageForm.description.value,
+                amount: parseFloat(manageForm.amount.value),
+                date: new Date(manageForm.date.value)
+            })
+
+            navigation.goBack()
+        }
+    }
+
     useLayoutEffect(() => {
         navigation.setOptions({
             title: expenseIdExist ? "Update Expense" : "New Expense"
         })
     }, [])
+
 
     return <View style={styles.allExpensesContainer}>
         <ExpenseForm handleText={handleText} manageForm={manageForm} />
@@ -135,7 +159,11 @@ export const ManagingExpense = () => {
 
             <View style={styles.buttons}>
                 <Button type="flat" onPress={handleCancel}>cancel</Button>
-                <Button onPress={handleUpdate}>Update</Button>
+                {
+                    expenseId ? <Button onPress={handleUpdate}>Update</Button> :
+                        <Button onPress={handleNew}>New</Button>
+                }
+
             </View>
 
             <View style={styles.iconButton}>

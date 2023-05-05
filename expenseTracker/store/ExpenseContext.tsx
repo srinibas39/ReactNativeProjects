@@ -45,7 +45,8 @@ interface ExpenseContextType {
     expenses: expenseType[],
     addExpense: (expense: expenseType) => void,
     removeExpense: (id: string) => void,
-    updateExpense: (id: string, expense: expenseType) => void
+    updateExpense: (id: string, expense: expenseType) => void,
+    getExpenses: () => expenseType[]
 }
 
 interface ExpenseContextProviderType {
@@ -63,7 +64,8 @@ export const ExpenseContext = createContext<ExpenseContextType>({
     expenses: [],
     addExpense: (expense) => { },
     removeExpense: (id) => { },
-    updateExpense: (id, expense) => { }
+    updateExpense: (id, expense) => { },
+    getExpenses: () => []
 })
 
 export const ExpenseContextProvider = ({ children }: ExpenseContextProviderType) => {
@@ -106,11 +108,16 @@ export const ExpenseContextProvider = ({ children }: ExpenseContextProviderType)
         expenseDispatch({ type: "update", payload: { id, expense } });
     };
 
+    const getExpenses = () => {
+        return dummyExpenses
+    }
+
     const value = {
         expenses: expenseState,
         addExpense,
         removeExpense,
         updateExpense,
+        getExpenses
     };
 
     return <ExpenseContext.Provider value={value}>

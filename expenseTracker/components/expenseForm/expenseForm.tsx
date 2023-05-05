@@ -22,6 +22,7 @@ export const ExpenseForm = (props: ExpenseFormProps) => {
                 inputConfiguration={{ keyboardType: "decimal-pad" }}
                 onChangeText={handleText}
                 errorStyle={!manageForm.amount.valid ? { backgroundColor: "#fca5a5" } : {}}
+                value={manageForm.amount.value}
             />
             <Input
                 label={"Date"}
@@ -31,6 +32,7 @@ export const ExpenseForm = (props: ExpenseFormProps) => {
                 }}
                 onChangeText={handleText}
                 errorStyle={!manageForm.date.valid ? { backgroundColor: "#fca5a5" } : {}}
+                value={manageForm.date.value}
             />
         </View>
         <View style={styles.form}>
@@ -43,6 +45,7 @@ export const ExpenseForm = (props: ExpenseFormProps) => {
                 }}
                 onChangeText={handleText}
                 errorStyle={!manageForm.description.valid ? { backgroundColor: "#fca5a5" } : {}}
+                value={manageForm.description.value}
             />
 
         </View>
