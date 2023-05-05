@@ -7,7 +7,6 @@ interface InputProps {
     }
 }
 
-
 export const Input = (props: InputProps) => {
     const { label, inputConfiguration } = props;
     const textStyle = [];
@@ -26,18 +25,20 @@ export const Input = (props: InputProps) => {
 
 const styles = StyleSheet.create({
     InputContainer: {
+        flex: 1,
+        margin: 10
 
     },
     label: {
         fontSize: 16,
-        color: "#e2e8f0"
+        color: "#22c55e",
+        textAlign: "center"
     },
     textInput: {
         backgroundColor: "#475569",
         marginVertical: 10,
         padding: 10,
         color: "#22c55e",
-
     },
     textInputMultiline: {
         minHeight: 100,
