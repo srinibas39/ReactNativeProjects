@@ -6,7 +6,7 @@ import { Button } from "../components/Button/Button";
 import { useExpense } from "../store/ExpenseContext";
 import { ExpenseForm } from "../components/expenseForm/expenseForm";
 import { useState } from "react";
-import { post, update } from "../utils/firebase";
+import { post, remove, update } from "../utils/firebase";
 
 export const ManagingExpense = () => {
     const route = useRoute<any>();
@@ -69,9 +69,16 @@ export const ManagingExpense = () => {
         }
     }
 
-    const handleDelete = () => {
-        removeExpense(expenseId)
-        navigation.goBack()
+    const handleDelete = async () => {
+        try {
+            const res = await remove(expenseId);
+            removeExpense(expenseId)
+            navigation.goBack()
+        }
+        catch (error) {
+            console.log(error)
+        }
+
     }
 
     const handleCancel = () => {
