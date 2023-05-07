@@ -2,9 +2,12 @@ import { View, Text, StyleSheet } from "react-native";
 import { ExpensesOutput } from "../components/expenses/ExpensesOutput";
 import { useExpense } from "../store/ExpenseContext";
 
+
+
 export const RecentExpense = () => {
 
     const { expenses } = useExpense()
+
 
     const calculateRecent7Days = (date: Date, days: number) => {
         return new Date(date.getFullYear(), date.getMonth(), date.getDate() - days)
