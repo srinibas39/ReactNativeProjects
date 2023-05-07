@@ -46,7 +46,7 @@ interface ExpenseContextType {
     addExpense: (expense: expenseType) => void,
     removeExpense: (id: string) => void,
     updateExpense: (id: string, expense: expenseType) => void,
-    getExpenses: () => expenseType[]
+    setExpenses: (expenses: expenseType[]) => void
 }
 
 interface ExpenseContextProviderType {
@@ -54,9 +54,11 @@ interface ExpenseContextProviderType {
 }
 
 type ExpenseAction =
+    | { type: "get"; payload: { expenses: expenseType[] } }
     | { type: "Add"; payload: { expense: expenseType } }
     | { type: "remove"; payload: { id: string } }
     | { type: "update"; payload: { id: string; expense: expenseType } };
+
 
 
 
@@ -65,7 +67,7 @@ export const ExpenseContext = createContext<ExpenseContextType>({
     addExpense: (expense) => { },
     removeExpense: (id) => { },
     updateExpense: (id, expense) => { },
-    getExpenses: () => []
+    setExpenses: (expenses) => { }
 })
 
 export const ExpenseContextProvider = ({ children }: ExpenseContextProviderType) => {
@@ -75,6 +77,8 @@ export const ExpenseContextProvider = ({ children }: ExpenseContextProviderType)
         action: ExpenseAction
     ) => {
         switch (action.type) {
+            case "get":
+                return action.payload.expenses.reverse()
             case "Add":
                 return [...state, action?.payload?.expense];
             case "remove":
@@ -93,7 +97,7 @@ export const ExpenseContextProvider = ({ children }: ExpenseContextProviderType)
 
 
 
-    const [expenseState, expenseDispatch] = useReducer(expenseReducer, dummyExpenses)
+    const [expenseState, expenseDispatch] = useReducer(expenseReducer, [])
 
 
     const addExpense = (expense: expenseType) => {
@@ -108,8 +112,8 @@ export const ExpenseContextProvider = ({ children }: ExpenseContextProviderType)
         expenseDispatch({ type: "update", payload: { id, expense } });
     };
 
-    const getExpenses = () => {
-        return dummyExpenses
+    const setExpenses = (expenses: expenseType[]) => {
+        expenseDispatch({ type: "get", payload: { expenses: expenses } });
     }
 
     const value = {
@@ -117,7 +121,7 @@ export const ExpenseContextProvider = ({ children }: ExpenseContextProviderType)
         addExpense,
         removeExpense,
         updateExpense,
-        getExpenses
+        setExpenses
     };
 
     return <ExpenseContext.Provider value={value}>

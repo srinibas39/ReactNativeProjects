@@ -3,7 +3,6 @@ import axios from "axios"
 const url = "https://expenseapp-904d0-default-rtdb.firebaseio.com/";
 
 interface Expense {
-    id: string,
     description: string,
     amount: number,
     date: Date
@@ -18,8 +17,9 @@ export const post = async (expense: Expense) => {
 export const get = async () => {
     const res = await axios.get(`${url}/expenses.json`);
     // transform object into array 
+    // return res.data
     const expenses = [];
-    for (let key in res) {
+    for (let key in res.data) {
         const expensesObj = {
             id: key,
             amount: res.data[key].amount,
@@ -29,7 +29,7 @@ export const get = async () => {
         expenses.push(expensesObj)
     }
 
-    return expenses;
+     return expenses;
 
 }
 

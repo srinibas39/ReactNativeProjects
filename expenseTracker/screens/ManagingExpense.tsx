@@ -6,13 +6,14 @@ import { Button } from "../components/Button/Button";
 import { useExpense } from "../store/ExpenseContext";
 import { ExpenseForm } from "../components/expenseForm/expenseForm";
 import { useState } from "react";
+import { post } from "../utils/firebase";
 
 export const ManagingExpense = () => {
     const route = useRoute<any>();
     const { expenseId, item } = route.params;
     const expenseIdExist = !!expenseId;
     const navigation = useNavigation<any>()
-    const { removeExpense, updateExpense, getExpenses, addExpense } = useExpense();
+    const { removeExpense, updateExpense,  addExpense } = useExpense();
 
 
 
@@ -132,16 +133,16 @@ export const ManagingExpense = () => {
 
     }
 
-    const handleNew = () => {
+    const handleNew = async () => {
         let isValid = checkValidity();
         if (isValid) {
-            addExpense({
-                id: Math.random().toString(),
+            const expenses = {
                 description: manageForm.description.value,
                 amount: parseFloat(manageForm.amount.value),
                 date: new Date(manageForm.date.value)
-            })
-
+            }
+            const id = await post(expenses)
+            addExpense({ ...expenses, id })
             navigation.goBack()
         }
     }
@@ -163,7 +164,6 @@ export const ManagingExpense = () => {
                     expenseId ? <Button onPress={handleUpdate}>Update</Button> :
                         <Button onPress={handleNew}>New</Button>
                 }
-
             </View>
 
             <View style={styles.iconButton}>
