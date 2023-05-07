@@ -7,6 +7,7 @@ import { useExpense } from "../store/ExpenseContext";
 import { ExpenseForm } from "../components/expenseForm/expenseForm";
 import { useState } from "react";
 import { post, remove, update } from "../utils/firebase";
+import { LoadingOverlay } from "../components/LoadingOverlay/LoadingOverlay";
 
 export const ManagingExpense = () => {
     const route = useRoute<any>();
@@ -14,6 +15,7 @@ export const ManagingExpense = () => {
     const expenseIdExist = !!expenseId;
     const navigation = useNavigation<any>()
     const { removeExpense, updateExpense, addExpense } = useExpense();
+    const [isLoading, setIsLoading] = useState(false)
 
 
 
@@ -70,6 +72,7 @@ export const ManagingExpense = () => {
     }
 
     const handleDelete = async () => {
+        setIsLoading(true)
         try {
             const res = await remove(expenseId);
             removeExpense(expenseId)
@@ -78,6 +81,7 @@ export const ManagingExpense = () => {
         catch (error) {
             console.log(error)
         }
+        setIsLoading(false)
 
     }
 
@@ -123,7 +127,7 @@ export const ManagingExpense = () => {
     }
 
     const handleUpdate = async () => {
-
+        setIsLoading(true)
         let isValid = checkValidity();
 
         if (isValid) {
@@ -147,10 +151,11 @@ export const ManagingExpense = () => {
             }
 
         }
-
+        setIsLoading(false)
     }
 
     const handleNew = async () => {
+        setIsLoading(true)
         let isValid = checkValidity();
         if (isValid) {
             const expenses = {
@@ -168,6 +173,7 @@ export const ManagingExpense = () => {
             }
 
         }
+        setIsLoading(false)
     }
 
     useLayoutEffect(() => {
@@ -176,6 +182,10 @@ export const ManagingExpense = () => {
         })
     }, [])
 
+
+    if (isLoading) {
+        return <LoadingOverlay />
+    }
 
     return <View style={styles.allExpensesContainer}>
         <ExpenseForm handleText={handleText} manageForm={manageForm} />
