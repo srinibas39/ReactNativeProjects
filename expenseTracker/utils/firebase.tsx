@@ -1,6 +1,6 @@
 import axios from "axios"
 
-const url = "https://expenseapp-904d0-default-rtdb.firebaseio.com/";
+const url = "https://expenseapp-904d0-default-rtdb.firebaseio.com";
 
 interface Expense {
     description: string,

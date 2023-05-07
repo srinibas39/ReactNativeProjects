@@ -18,7 +18,6 @@ export const ManagingExpense = () => {
     const [isLoading, setIsLoading] = useState(false)
 
 
-
     const parsedItem = expenseId && JSON.parse(item)
     // if (expenseId) {
 
@@ -79,6 +78,7 @@ export const ManagingExpense = () => {
             navigation.goBack()
         }
         catch (error) {
+
             console.log(error)
         }
         setIsLoading(false)
