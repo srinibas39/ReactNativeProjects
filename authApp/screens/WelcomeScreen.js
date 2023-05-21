@@ -1,16 +1,26 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { useAuth } from '../store/AuthContext';
 
 function WelcomeScreen() {
 
   const [text, setText] = useState("")
 
+  const { token } = useAuth()
+
+  console.log(token)
+
   useEffect(() => {
     (async () => {
-      const res = await axios.get("https://auth-app-d6ce4-default-rtdb.firebaseio.com/greet.json");
-      console.log(res.data)
-      setText(res.data)
+      try {
+        const res = await axios.get(`https://auth-app-d6ce4-default-rtdb.firebaseio.com/greet.json?auth=${token}`);
+        console.log(res.data)
+        setText(res.data)
+
+      } catch (err) {
+        console.log(err.message)
+      }
     })()
   }, [])
 
