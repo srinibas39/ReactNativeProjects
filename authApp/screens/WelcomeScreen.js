@@ -1,11 +1,24 @@
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
 function WelcomeScreen() {
+
+  const [text, setText] = useState("")
+
+  useEffect(() => {
+    (async () => {
+      const res = await axios.get("https://auth-app-d6ce4-default-rtdb.firebaseio.com/greet.json");
+      console.log(res.data)
+      setText(res.data)
+    })()
+  }, [])
 
   return (
     <View style={styles.rootContainer}>
       <Text style={styles.title}>Welcome!</Text>
       <Text>You authenticated successfully!</Text>
+      <Text style={styles.text}>{text}</Text>
     </View>
   );
 }
@@ -17,11 +30,14 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 32,      
+    padding: 32,
   },
   title: {
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 8,
   },
+  text: {
+    color: "blue"
+  }
 });
