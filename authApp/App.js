@@ -5,7 +5,7 @@ import WelcomeScreen from './screens/WelcomeScreen';
 import { Colors } from './constants/styles';
 import { createStackNavigator } from '@react-navigation/stack';
 import { StatusBar } from "react-native"
-import { AuthProvider } from './store/AuthContext';
+import { AuthProvider, useAuth } from './store/AuthContext';
 
 const Stack = createStackNavigator();
 
@@ -39,9 +39,13 @@ function AuthenticatedStack() {
 }
 
 function Navigation() {
+  const { isToken } = useAuth();
   return (
     <NavigationContainer>
-      <AuthStack />
+      {
+        isToken ? <AuthenticatedStack /> : <AuthStack />
+      }
+
     </NavigationContainer>
   );
 }
