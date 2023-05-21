@@ -2,6 +2,7 @@ import AuthContent from '../components/Auth/AuthContent';
 import { login } from '../utils/auth';
 import LoadingOverlay from "../components/ui/LoadingOverlay"
 import { useState } from "react";
+import { Alert } from "react-native";
 
 function LoginScreen() {
 
@@ -14,7 +15,12 @@ function LoginScreen() {
       console.log(token)
     }
     catch (err) {
-      console.log(err)
+      Alert.alert("Login Error", err.message, [
+        {
+          text: "Ok",
+          onPress: () => console.log("Ok pressed")
+        }
+      ])
     }
     setIsLoading(false)
   }

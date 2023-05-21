@@ -2,6 +2,7 @@ import AuthContent from '../components/Auth/AuthContent';
 import LoadingOverlay from '../components/ui/LoadingOverlay';
 import { signup } from '../utils/auth';
 import { useState } from "react";
+import { Alert } from "react-native"
 
 function SignupScreen() {
 
@@ -11,10 +12,14 @@ function SignupScreen() {
     setIsLoading(true)
     try {
       const token = await signup({ email, password })
-      console.log(token)
     }
     catch (err) {
-      console.log(err)
+      Alert.alert("Signup Error", err.message, [
+        {
+          text: "Ok",
+          onPress: () => console.log("Ok pressed")
+        }
+      ])
     }
     setIsLoading(false)
 
