@@ -4,8 +4,12 @@ import SignupScreen from './screens/SignupScreen';
 import WelcomeScreen from './screens/WelcomeScreen';
 import { Colors } from './constants/styles';
 import { createStackNavigator } from '@react-navigation/stack';
-import { StatusBar } from "react-native"
+import { StatusBar, Button } from "react-native"
 import { AuthProvider, useAuth } from './store/AuthContext';
+import Icon from 'react-native-vector-icons/Ionicons';
+
+
+
 
 const Stack = createStackNavigator();
 
@@ -25,13 +29,22 @@ function AuthStack() {
 }
 
 function AuthenticatedStack() {
+
+  const { logout } = useAuth();
+
+  const handleLogout = () => {
+    logout()
+  }
   return (
     <Stack.Navigator
       screenOptions={{
         headerStyle: { backgroundColor: Colors.primary500 },
         headerTintColor: 'white',
         contentStyle: { backgroundColor: Colors.primary100 },
+        // headerRight: ({ color, size }) => <Icon name="list" size={size} color={color}/>
+        headerRight: () => <Button title='logout' onPress={handleLogout} />
       }}
+
     >
       <Stack.Screen name="Welcome" component={WelcomeScreen} />
     </Stack.Navigator>
