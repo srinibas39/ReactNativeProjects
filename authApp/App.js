@@ -5,6 +5,7 @@ import WelcomeScreen from './screens/WelcomeScreen';
 import { Colors } from './constants/styles';
 import { createStackNavigator } from '@react-navigation/stack';
 import { StatusBar } from "react-native"
+import { AuthProvider } from './store/AuthContext';
 
 const Stack = createStackNavigator();
 
@@ -48,8 +49,10 @@ function Navigation() {
 export default function App() {
   return (
     <>
-      <StatusBar style="light" />
-      <Navigation />
+      <AuthProvider>
+        <StatusBar style="light" />
+        <Navigation />
+      </AuthProvider>
     </>
   );
 }
