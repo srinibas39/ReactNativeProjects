@@ -9,13 +9,11 @@ function WelcomeScreen() {
 
   const { token } = useAuth()
 
-  console.log(token)
 
   useEffect(() => {
     (async () => {
       try {
         const res = await axios.get(`https://auth-app-d6ce4-default-rtdb.firebaseio.com/greet.json?auth=${token}`);
-        console.log(res.data)
         setText(res.data)
 
       } catch (err) {

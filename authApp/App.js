@@ -63,12 +63,17 @@ function Navigation() {
   );
 }
 
+const Root = () => {
+  return <Navigation />
+}
+
 export default function App() {
+
   return (
     <>
       <AuthProvider>
         <StatusBar style="light" />
-        <Navigation />
+        <Root />
       </AuthProvider>
     </>
   );
