@@ -26,22 +26,39 @@ export const AuthProvider = ({ children }) => {
     });
 
     const setTokenInDB = async (token) => {
-        const res = await AsyncStorage.setItem("token", token)
-    }
+        try {
+            await AsyncStorage.setItem("token", token);
+            console.log("Token saved successfully.");
+        } catch (error) {
+            console.log("Error saving token:", error);
+        }
+    };
+
     const removeTokenFromDB = async () => {
-        const res = await AsyncStorage.removeItem("token");
+        try {
+            await AsyncStorage.removeItem("token");
+            console.log("Token removed successfully")
+        }
+        catch (error) {
+            console.log("hello".error);
+        }
     }
 
-    const getTokenFromDB = async () => {
-        const res = await AsyncStorage.getItem("token");
-        return res;
-    }
 
     const setToken = (token) => {
         authDispatch({ type: "SET_TOKEN", payload: { token } });
         setTokenInDB(token);
     };
 
+    const getTokenFromDB = async () => {
+        try {
+            const res = await AsyncStorage.getItem("token");
+            setToken(res)
+        }
+        catch (error) {
+            console.log(error);
+        }
+    }
     const logout = () => {
         authDispatch({ type: "LOGOUT" });
         removeTokenFromDB()
@@ -52,7 +69,9 @@ export const AuthProvider = ({ children }) => {
         isToken: authState.isToken,
         setToken: setToken,
         logout: logout,
-        getTokenFromDB
+        getTokenFromDB: getTokenFromDB,
+        setTokenInDB: setTokenInDB,
+        removeTokenFromDB: removeTokenFromDB
     };
 
     return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

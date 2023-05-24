@@ -7,6 +7,9 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { StatusBar, Button } from "react-native"
 import { AuthProvider, useAuth } from './store/AuthContext';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { useEffect, useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
+
 
 
 
@@ -31,9 +34,12 @@ function AuthStack() {
 function AuthenticatedStack() {
 
   const { logout } = useAuth();
+  const navigation = useNavigation();
 
   const handleLogout = () => {
+    console.log("hello")
     logout()
+    // navigation.navigate("Login")
   }
   return (
     <Stack.Navigator
@@ -42,7 +48,7 @@ function AuthenticatedStack() {
         headerTintColor: 'white',
         contentStyle: { backgroundColor: Colors.primary100 },
         // headerRight: ({ color, size }) => <Icon name="list" size={size} color={color}/>
-        headerRight: () => <Button title='logout' onPress={handleLogout} />
+        headerRight: () => <Button title='logout' onPress={handleLogout} style={{ cursor: "pointer" }} />
       }}
 
     >
@@ -52,8 +58,17 @@ function AuthenticatedStack() {
 }
 
 function Navigation() {
-  const { isToken } = useAuth();
+  const { isToken, getTokenFromDB } = useAuth();
+
+  useEffect(() => {
+    const checkTokenExist = async () => {
+      await getTokenFromDB();
+    }
+    checkTokenExist()
+  }, [])
+
   return (
+
     <NavigationContainer>
       {
         isToken ? <AuthenticatedStack /> : <AuthStack />
